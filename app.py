@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, RadioField, SelectField, SubmitField
 from wtforms.validators import DataRequired
@@ -13,8 +13,9 @@ class FeedbackForm(FlaskForm):
     satisfaction = SelectField('Overall Satisfaction', choices=[('very-satisfied', 'Very Satisfied'), ('satisfied', 'Satisfied'), ('neutral', 'Neutral'), ('unsatisfied', 'Unsatisfied'), ('very-unsatisfied', 'Very Unsatisfied')], validators=[DataRequired()])
     recommend = RadioField('Would you recommend this course to others?', choices=[('yes', 'Yes'), ('no', 'No')], validators=[DataRequired()])
     improvements = TextAreaField('Suggestions for Improvement')
+    submit = SubmitField('Submit')
 
-app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def feedback():
     form = FeedbackForm()
     if form.validate_on_submit():
