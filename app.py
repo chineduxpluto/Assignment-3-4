@@ -13,3 +13,29 @@ class FeedbackForm(FlaskForm):
     satisfaction = SelectField('Overall Satisfaction', choices=[('very-satisfied', 'Very Satisfied'), ('satisfied', 'Satisfied'), ('neutral', 'Neutral'), ('unsatisfied', 'Unsatisfied'), ('very-unsatisfied', 'Very Unsatisfied')], validators=[DataRequired()])
     recommend = RadioField('Would you recommend this course to others?', choices=[('yes', 'Yes'), ('no', 'No')], validators=[DataRequired()])
     improvements = TextAreaField('Suggestions for Improvement')
+
+app.route('/', methods=['GET', 'POST'])
+def feedback():
+    form = FeedbackForm()
+    if form.validate_on_submit():
+        data = (
+            f"Name: {form.name.data}\n"
+            f"Course: {form.course.data}\n"
+            f"Short-form Answer: {form.short_answer.data}\n"
+            f"Long-form Answer: {form.long_answer.data}\n"
+            f"Overall Satisfaction: {form.satisfaction.data}\n"
+            f"Recommend: {form.recommend.data}\n"
+            f"Suggestions for Improvement: {form.improvements.data}\n\n"
+        )
+
+        file_path = 'feedback.txt'
+
+        with open(file_path, 'a') as file:
+            file.write(data)
+
+        return redirect(url_for('feedback'))
+    return render_template('Example.html', form=form)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
