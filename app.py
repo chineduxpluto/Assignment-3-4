@@ -4,6 +4,7 @@ from wtforms import StringField, TextAreaField, RadioField, SelectField, SubmitF
 from wtforms.validators import DataRequired
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'Moses'
 
 class FeedbackForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])

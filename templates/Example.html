@@ -8,6 +8,8 @@
 <body>
     <h1>Student Feedback Form</h1>
     <form method="POST">
+        {{ form.hidden_tag() }}
+
         <div>
             {{ form.name.label }}<br>
             {{ form.name(size=32) }}
